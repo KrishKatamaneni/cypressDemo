@@ -10,16 +10,17 @@ describe('Test Contact App', () => {
     cy.get('h1.text-center').should('have.text', 'Contact List App');
     cy.get('table tbody tr').should('have.length', 1)
   })
-
-  it('Test in the application we can see 3 input fields and also contain Add button', () => {
-    action.verifyInputField();
+  
+  it('Verify Table headers', () => {
+    action.verifyTableHeaders();
+  })
+  
+  it('Veiry input fields and button(s)', () => {
+    action.verifyPageElements();
   })
 
   it('Test in the application all input fields are in editable format', () => {
     action.verifyInputFiledEditable();
-  })
-  it('Test in the application are we able to fill the data oin each field', () => {
-    action.enterDetail();
   })
 
   it('After successfull filling the data are we able to click on Add button and verify the data coming proper', () => {
@@ -27,7 +28,7 @@ describe('Test Contact App', () => {
   })
 
   it('when user click on edit then he can edit', () => {
-    action.enterDetailsAndClickOnEdit()
+    action.editDetails()
   })
 
   // Add tests here

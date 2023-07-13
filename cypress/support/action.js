@@ -1,8 +1,24 @@
 export default {
-    enterDetail() {
-        cy.get('#app').find('[placeholder="Name"]').click().type('Radhe Krishna');
-        cy.get('[placeholder="Phone"]').click().type('1203654789');
-        cy.get('[placeholder="Email"]').click().type('RadheKrishna@gmial.com');
+    verifyTableHeaders(){
+        cy.get('table > tbody').find('th').contains('Name')
+        cy.get('table > tbody').find('th').contains('Phone')
+        cy.get('table > tbody').find('th').contains('Email')
+        cy.get('table > tbody').find('th').contains('Actions')
+    },
+    verifyPageElements(){
+        cy.get('body').find('input').then(input => {
+            
+            //Verifies the number of input fields
+            expect(input.length).to.equals(3);                
+            
+            //Verifies the identity of the fields
+            cy.get('#app').find('[placeholder="Name"]'); 
+            cy.get('[placeholder="Phone"]');
+            cy.get('[placeholder="Email"]');
+          })
+        
+          // Verified the existance of Add button
+          cy.get('body').find('button').contains('Add');
     },
     verifyInputFiledEditable() {
         cy.get('body').find('input').then(input => {
@@ -11,14 +27,8 @@ export default {
             }
           })
     },
-    verifyInputField(){
-        cy.get('body').find('input').then(input => {
-            expect(input.length).to.equals(3);
-          })
-          cy.get('body').find('button').contains('Add');
-    },
     enterDetails() {
-        let name = 'Radhe Krishna', phone = '1203654789', email = 'RadheKrishna@gmial.com' ;
+        let name = 'John Doe', phone = '613-111-1111', email = 'johndoe@gmial.com' ;
         cy.get('#app').find('[placeholder="Name"]').click().type(name);
         cy.get('[placeholder="Phone"]').click().type(phone);
         cy.get('[placeholder="Email"]').click().type(email);
@@ -31,11 +41,14 @@ export default {
           cy.get('[name="delete"]').should('exist');
         })    
     },
-    enterDetailsAndClickOnEdit() {
+    editDetails() {
         this.enterDetails();
-        cy.wait(3000)
         cy.get('[name="edit"]').click();
-        cy.get('table > tbody').find('tr').last().find('td').eq(0).find('input').click().clear().type('Seeta Ram');      
+        cy.wait(3000)
+        cy.get('table > tbody').find('tr').last().find('td').eq(0).find('input').click().clear().type('Johnny Doe');
+        cy.get('table > tbody').find('tr').last().find('td').eq(1).find('input').click().clear().type('613-211-1111');
+        cy.get('table > tbody').find('tr').last().find('td').eq(2).find('input').click().clear().type('johnnydoe@gmial.com');
+        cy.wait(3000)
         cy.get('[name="update"]').click()
-    }
+    },
 }
