@@ -24,11 +24,11 @@ describe('Test Contact App', () => {
   })
 
   it('After successfull filling the data are we able to click on Add button and verify the data coming proper', () => {
-    action.enterDetails();
+    action.addData();
   })
 
   it('when user click on edit then he can edit', () => {
-    action.editDetails()
+    action.editData();
   })
 
   // Add tests here
