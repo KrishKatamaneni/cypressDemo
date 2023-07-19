@@ -7,19 +7,24 @@ export default {
         cy.get('table > tbody').find('th').contains('Actions')
     },
 
+    clickButton(btn) {
+      return cy.get('body').find('button').contains(btn);
+    },
+
     verifyPageElements(){
         cy.get('body').find('input').then(input => {
             //Verifies the number of input fields
             expect(input.length).to.equals(3);                
 
             //Verifies the identity of the fields
+
             cy.get('#app').find('[placeholder="Name"]');
             cy.get('[placeholder="Phone"]');
             cy.get('[placeholder="Email"]');
           })
-          
-          // Verified the existance of Add button
-          cy.get('body').find('button').contains('Add');
+
+          // Verifies the existance of Add button
+          this.clickButton('Add')
     },
 
     verifyInputFiledEditable() {
@@ -31,14 +36,12 @@ export default {
     },
 
     verifyAllDetails(name, phone, email) {
-
       cy.get('table > tbody').find('tr').last().find('td').then( data => {
         expect(data[0].innerText).to.equals(name);
         expect(data[1].innerText).to.equals(phone);
         expect(data[2].innerText).to.equals(email);
         cy.get('[name="edit"]').should('exist');
         cy.get('[name="delete"]').should('exist');
-
       })    
     },
 
@@ -47,7 +50,7 @@ export default {
         cy.get('#app').find('[placeholder="Name"]').click().type(name);
         cy.get('[placeholder="Phone"]').click().type(phone);
         cy.get('[placeholder="Email"]').click().type(email);
-        cy.get('body').find('button').contains('Add').click();
+        this.clickButton('Add').click()
         this.verifyAllDetails(name, phone, email);  
     },
 
@@ -61,7 +64,15 @@ export default {
         cy.get('table > tbody').find('tr').last().find('td').eq(2).find('input').click().clear().type(email);
         cy.get('[name="update"]').click()
         this.verifyAllDetails(name, phone, email);
-
     },
 
+    clickOnDelete() {
+      cy.get('[name="delete"]').click();
+    },
+
+    verifyNoDataInTable() {
+      cy.get('table > tbody').find('tr').then(tbody => {
+        expect(tbody.length).to.equals(1);
+      })
+    }
 }

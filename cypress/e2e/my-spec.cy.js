@@ -31,5 +31,17 @@ describe('Test Contact App', () => {
     action.editData();
   })
 
+  it('when user not input any value and click on add then no action will perform', () => {
+    action.clickButton('Add').click();
+    action.verifyNoDataInTable();
+  })
+
+  it('when user click on delete button then data should be deleted from the row', () => {
+    action.addData();
+    action.clickOnDelete();
+    action.verifyNoDataInTable()
+
+  })
+
   // Add tests here
 });
